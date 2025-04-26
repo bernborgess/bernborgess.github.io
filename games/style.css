@@ -1,0 +1,119 @@
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-y: auto; /* Allow vertical scrolling when needed */
+}
+
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #2980b9, #8e44ad, #2c3e50, #d35400);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    z-index: 0;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+header, main, footer {
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    background-color: rgba(51, 51, 51, 0.8);
+    padding: 20px 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+main {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto; /* Allow scrolling within the main content area */
+}
+
+.game-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.game-item {
+    background-color: rgba(34, 34, 34, 0.8);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #e0e0e0;
+}
+
+.game-item:hover {
+    transform: scale(1.05);
+}
+
+.game-item img {
+    max-width: 150px;
+    margin-right: 20px;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+.game-item h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.game-item p {
+    margin: 0;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+footer {
+    background-color: rgba(51, 51, 51, 0.8);
+    padding: 10px 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
