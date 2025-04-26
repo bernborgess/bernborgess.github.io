@@ -1,0 +1,79 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+    <center>
+        <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+        <script type='text/javascript'>
+            var Module = {
+                canvas: (function () { return document.getElementById('canvas'); })()
+            };
+
+            var startY; // Store the initial touch Y position
+            var currentKeyDown; // Store the currently pressed key
+
+            Module.canvas.addEventListener('touchstart', function (e) {
+                startY = e.touches[0].clientY;
+                currentKeyDown = null; //Reset the currently pressed key.
+            }, false);
+
+            Module.canvas.addEventListener('touchmove', function (e) {
+                if (!startY) return;
+
+                var currentY = e.touches[0].clientY;
+                var diffY = startY - currentY;
+
+                if (diffY > 10) {
+                    // Swipe up
+                    if (currentKeyDown !== 38) {
+                        if (currentKeyDown) simulateKeyEvent('keyup', currentKeyDown);
+                        simulateKeyEvent('keydown', 38); // Up arrow key
+                        currentKeyDown = 38;
+                    }
+                } else if (diffY < -10) {
+                    // Swipe down
+                     if (currentKeyDown !== 40) {
+                        if (currentKeyDown) simulateKeyEvent('keyup', currentKeyDown);
+                        simulateKeyEvent('keydown', 40); // Down arrow key
+                        currentKeyDown = 40;
+                    }
+                } else {
+                    if (currentKeyDown) {
+                        simulateKeyEvent('keyup', currentKeyDown);
+                        currentKeyDown = null;
+                    }
+                }
+
+                startY = currentY; // Update startY for next move
+            }, false);
+
+            Module.canvas.addEventListener('touchend', function (e) {
+                if (currentKeyDown) {
+                    simulateKeyEvent('keyup', currentKeyDown);
+                    currentKeyDown = null;
+                }
+                startY = null; //Reset the startY
+            }, false);
+
+            function simulateKeyEvent(type, keyCode) {
+                var event = new KeyboardEvent(type, {
+                    keyCode: keyCode,
+                    which: keyCode,
+                    key: keyCode === 38 ? 'ArrowUp' : 'ArrowDown',
+                    code: keyCode === 38 ? 'ArrowUp' : 'ArrowDown',
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                });
+                document.dispatchEvent(event);
+            }
+        </script>
+        <script src="index.js"></script>
+    </center>
+</body>
+
+</html>

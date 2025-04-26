@@ -1,0 +1,144 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+    body {
+        touch-action: manipulation; /* Prevent default touch gestures that might cause zoom */
+        background-color: black; /* Set black background for the page */
+    }
+
+    #virtual-buttons-container {
+        position: absolute;
+        bottom: 30px; /* Increased bottom margin */
+        left: 50%;
+        transform: translateX(-50%);
+        display: none; /* Hidden by default */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #movement-buttons {
+        display: flex;
+        margin-bottom: 25px; /* Increased margin */
+    }
+
+    .arrow-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 90px; /* Increased button size */
+        height: 90px; /* Increased button size */
+        background-color: rgba(0, 0, 0, 0.6); /* Slightly less transparent */
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+        font-size: 2.5em; /* Larger arrow */
+        margin: 0 15px; /* Increased margin */
+    }
+
+    #forward-button {
+        margin-bottom: -45px; /* Adjust overlap */
+    }
+
+    #shoot-button {
+        width: 120px; /* Increased button size */
+        height: 120px; /* Increased button size */
+        background-color: rgba(255, 0, 0, 0.8); /* Slightly less transparent */
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+        font-size: 3em; /* Larger icon */
+        margin-top: 30px; /* Increased margin */
+    }
+
+    /* Media query to hide buttons on non-mobile devices */
+    @media (pointer: fine) {
+        #virtual-buttons-container {
+            display: none !important;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <center>
+        <canvas id="canvas" oncontextmenu="event.preventDefault()" width="1280" height="720" style="width: 100%; max-width: 1280px; height: auto;"></canvas>
+        <div id="virtual-buttons-container">
+            <div id="movement-buttons">
+                <div id="left-button" class="arrow-button" ontouchstart="simulateKeyDown(37)" ontouchend="simulateKeyUp(37)">&#8592;</div>
+                <div id="forward-button" class="arrow-button" ontouchstart="simulateKeyDown(38)" ontouchend="simulateKeyUp(38)">&#8593;</div>
+                <div id="right-button" class="arrow-button" ontouchstart="simulateKeyDown(39)" ontouchend="simulateKeyUp(39)">&#8594;</div>
+            </div>
+            <div id="shoot-button" ontouchstart="simulateKeyDown(32)" ontouchend="simulateKeyUp(32)">&#x2022;</div>
+        </div>
+        <script type='text/javascript'>
+            var Module = {
+                canvas: (function () { return document.getElementById('canvas'); })()
+            };
+
+            var virtualButtonsContainer = document.getElementById('virtual-buttons-container');
+
+            function isMobile() {
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            }
+
+            if (isMobile()) {
+                virtualButtonsContainer.style.display = 'flex'; // Show virtual buttons on mobile
+            }
+
+            function simulateKeyDown(keyCode) {
+                simulateKeyEvent('keydown', keyCode);
+            }
+
+            function simulateKeyUp(keyCode) {
+                simulateKeyEvent('keyup', keyCode);
+            }
+
+            function simulateKeyEvent(type, keyCode) {
+                var event = new KeyboardEvent(type, {
+                    keyCode: keyCode,
+                    which: keyCode,
+                    key: getKeyFromKeyCode(keyCode),
+                    code: getCodeFromKeyCode(keyCode),
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                });
+                document.dispatchEvent(event);
+            }
+
+            function getKeyFromKeyCode(keyCode) {
+                switch (keyCode) {
+                    case 37: return 'ArrowLeft';
+                    case 38: return 'ArrowUp';
+                    case 39: return 'ArrowRight';
+                    case 40: return 'ArrowDown';
+                    case 32: return ' ';
+                    default: return '';
+                }
+            }
+
+            function getCodeFromKeyCode(keyCode) {
+                switch (keyCode) {
+                    case 37: return 'ArrowLeft';
+                    case 38: return 'ArrowUp';
+                    case 39: return 'ArrowRight';
+                    case 40: return 'ArrowDown';
+                    case 32: return 'Space';
+                    default: return '';
+                }
+            }
+        </script>
+        <script src="index.js"></script>
+    </center>
+</body>
+
+</html>
