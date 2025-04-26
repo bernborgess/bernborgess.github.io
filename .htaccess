@@ -1,0 +1,10 @@
+# Deny access to .htaccess
+<Files .htaccess>
+Order allow,deny
+Deny from all
+</Files>
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Forbid any .git directory or file
+  RewriteRule (^|/)\.git(/|$) - [F,L]
+</IfModule>
