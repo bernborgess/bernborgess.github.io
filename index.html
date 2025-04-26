@@ -75,8 +75,6 @@
                         </p>
 
 
-                        <hr />
-
                         <p class="w3-large">
                             <b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-green"></i>Skills</b>
                         </p>
@@ -117,6 +115,42 @@
                     </div>
                 </div>
                 <br />
+                <!-- Color Change Buttons -->
+                <div class="w3-dropdown-hover">
+                    <button class="w3-button w3-green">Accent Color ▾</button>
+                    <div class="w3-dropdown-content w3-bar-block w3-border">
+                        <a href="#" class="w3-bar-item w3-button" onclick="setAccentColor('green')">Green</a>
+                        <a href="#" class="w3-bar-item w3-button" onclick="setAccentColor('teal')">Teal</a>
+                        <a href="#" class="w3-bar-item w3-button" onclick="setAccentColor('blue')">Blue</a>
+                    </div>
+                </div>
+
+                <script>
+                    let currentAccent = 'green';
+
+                    function setAccentColor(newColor) {
+                        // 1) swap text-color classes
+                        document.querySelectorAll('.w3-text-' + currentAccent)
+                            .forEach(el => {
+                                el.classList.replace(
+                                    'w3-text-' + currentAccent,
+                                    'w3-text-' + newColor
+                                );
+                            });
+
+                        // 2) swap background-color classes
+                        document.querySelectorAll('.w3-' + currentAccent)
+                            .forEach(el => {
+                                el.classList.replace(
+                                    'w3-' + currentAccent,
+                                    'w3-' + newColor
+                                );
+                            });
+
+                        // 3) update our “current” for the next click
+                        currentAccent = newColor;
+                    }
+                </script>
 
                 <!-- End Left Column -->
             </div>
@@ -368,6 +402,11 @@
         <a href="http://freedns.afraid.org/" target="_blank" rel="noopener noreferrer">Free DNS</a>
 
     </footer>
+
+    <!-- My personal default choice -->
+    <script>
+        setAccentColor('teal');
+    </script>
 </body>
 
 </html>
